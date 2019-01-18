@@ -13,6 +13,8 @@ public class JavaMatic {
 	private HashMap<String, Map<String, Integer>> drinkRecipes;
 	private NumberFormat usCurrencyformat;
 	private String[] drinkPrices;
+	
+	private final int MAX_INGREDIENT_QUANTITY = 10;
 
 	JavaMatic() {
 		ingredients = new String[] { "Coffee", "Decaf Coffee", "Sugar", "Cream", "Steamed Milk", "Foamed Milk",
@@ -24,7 +26,7 @@ public class JavaMatic {
 		ingredientPrices = new HashMap<>();
 
 		for (int i = 0; i < ingredients.length; i++) {
-			ingredientStock.put(ingredients[i], 10);
+			ingredientStock.put(ingredients[i], MAX_INGREDIENT_QUANTITY);
 			ingredientPrices.put(ingredients[i], prices[i]);
 		}
 
@@ -104,7 +106,7 @@ public class JavaMatic {
 
 	public void restock() {
 		for (int i = 0; i < ingredients.length; i++) {
-			ingredientStock.put(ingredients[i], 10);
+			ingredientStock.put(ingredients[i], MAX_INGREDIENT_QUANTITY);
 		}
 
 		updateDrinksStock();
