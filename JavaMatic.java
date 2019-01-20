@@ -1,5 +1,8 @@
 import java.util.*;
 import static java.util.Map.entry;
+
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -125,48 +128,50 @@ public class JavaMatic {
 		updateDrinksStock();
 	}
 
-	public void printIngredientStocks() {
-		System.out.println("Inventory:");
+	public void printIngredientStocks(PrintStream cout) {
+		cout.println("Inventory:");
 
 		for (String ingredient : ingredients) {
-			System.out.println(ingredient + "," + ingredientStock.get(ingredient));
+			cout.println(ingredient + "," + ingredientStock.get(ingredient));
 		}
 	}
 
-	public void printMenu() {
-		System.out.println("Menu:");
+	public void printMenu(PrintStream cout) {
+		cout.println("Menu:");
 
 		for(int i = 0; i < drinks.length; i++) {
-			System.out.println((i + 1) + "," + drinks[i] + "," + drinkPrices[i] + "," + drinksStock[i]);
+			cout.println((i + 1) + "," + drinks[i] + "," + drinkPrices[i] + "," + drinksStock[i]);
 		}
 	}
 
 	public static void main(String[] args) {
 
 		Scanner cin = new Scanner(System.in);
-
+		
+		PrintStream cout = new PrintStream(System.out);
+		
 		JavaMatic javaMatic = new JavaMatic();
 		
-		javaMatic.printIngredientStocks();
-		javaMatic.printMenu();
+		javaMatic.printIngredientStocks(cout);
+		javaMatic.printMenu(cout);
 		
 		String input = cin.nextLine();
 
 		while (!input.toLowerCase().equals("q")) {
 			if (!valid(input)) {
-				System.out.println("Invalid selection: " + input);
+				cout.println("Invalid selection: " + input);
 			} else if (input.toLowerCase().equals("r")) {
 				javaMatic.restock();
 			} else if (javaMatic.drinkInStock(input)) {
-				System.out.println("Dispensing: " + javaMatic.getDrinkName(input));
+				cout.println("Dispensing: " + javaMatic.getDrinkName(input));
 
 				javaMatic.dispenseDrink(input);
 			} else {
-				System.out.println("Out of stock: " + javaMatic.getDrinkName(input));
+				cout.println("Out of stock: " + javaMatic.getDrinkName(input));
 			}
 			
-			javaMatic.printIngredientStocks();
-			javaMatic.printMenu();
+			javaMatic.printIngredientStocks(cout);
+			javaMatic.printMenu(cout);
 			
 			input = cin.nextLine();
 		}
