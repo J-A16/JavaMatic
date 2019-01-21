@@ -1,7 +1,6 @@
 import java.util.*;
 import static java.util.Map.entry;
 
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -36,7 +35,7 @@ public class JavaMatic {
 		Arrays.sort(ingredients);
 
 		drinks = new String[] { "Coffee", "Decaf Coffee", "Caffe Latte", "Caffe Americano", "Caffe Mocha",
-				"Cappuccino" };
+				"Cappucinputo" };
 
 		Arrays.sort(drinks);
 
@@ -53,7 +52,7 @@ public class JavaMatic {
 		drinkRecipes.put("Caffe Mocha", Map.ofEntries(entry("Espresso", 1), entry("Cocoa", 1), entry("Steamed Milk", 1),
 				entry("Whipped Cream", 1)));
 
-		drinkRecipes.put("Cappuccino",
+		drinkRecipes.put("Cappucinputo",
 				Map.ofEntries(entry("Espresso", 2), entry("Steamed Milk", 1), entry("Foamed Milk", 1)));
 
 		drinksStock = new boolean[drinks.length];
@@ -128,64 +127,64 @@ public class JavaMatic {
 		updateDrinksStock();
 	}
 
-	public void printIngredientStocks(PrintStream cout) {
-		cout.println("Inventory:");
+	public void printIngredientStocks(PrintStream output) {
+		output.println("Inventory:");
 
 		for (String ingredient : ingredients) {
-			cout.println(ingredient + "," + ingredientStock.get(ingredient));
+			output.println(ingredient + "," + ingredientStock.get(ingredient));
 		}
 	}
 
-	public void printMenu(PrintStream cout) {
-		cout.println("Menu:");
+	public void printMenu(PrintStream output) {
+		output.println("Menu:");
 
 		for(int i = 0; i < drinks.length; i++) {
-			cout.println((i + 1) + "," + drinks[i] + "," + drinkPrices[i] + "," + drinksStock[i]);
+			output.println((i + 1) + "," + drinks[i] + "," + drinkPrices[i] + "," + drinksStock[i]);
 		}
 	}
 
 	public static void main(String[] args) {
 
-		Scanner cin = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		
-		PrintStream cout = new PrintStream(System.out);
+		PrintStream output = new PrintStream(System.out);
 		
 		JavaMatic javaMatic = new JavaMatic();
 		
-		javaMatic.printIngredientStocks(cout);
-		javaMatic.printMenu(cout);
+		javaMatic.printIngredientStocks(output);
+		javaMatic.printMenu(output);
 		
-		String input = cin.nextLine();
+		String instruction = input.nextLine();
 
-		while (!input.toLowerCase().equals("q")) {
-			if (!valid(input)) {
-				cout.println("Invalid selection: " + input);
-			} else if (input.toLowerCase().equals("r")) {
+		while (!instruction.toLowerCase().equals("q")) {
+			if (!valid(instruction)) {
+				output.println("Invalid selection: " + instruction);
+			} else if (instruction.toLowerCase().equals("r")) {
 				javaMatic.restock();
-			} else if (javaMatic.drinkInStock(input)) {
-				cout.println("Dispensing: " + javaMatic.getDrinkName(input));
+			} else if (javaMatic.drinkInStock(instruction)) {
+				output.println("Dispensing: " + javaMatic.getDrinkName(instruction));
 
-				javaMatic.dispenseDrink(input);
+				javaMatic.dispenseDrink(instruction);
 			} else {
-				cout.println("Out of stock: " + javaMatic.getDrinkName(input));
+				output.println("Out of stock: " + javaMatic.getDrinkName(instruction));
 			}
 			
-			javaMatic.printIngredientStocks(cout);
-			javaMatic.printMenu(cout);
+			javaMatic.printIngredientStocks(output);
+			javaMatic.printMenu(output);
 			
-			input = cin.nextLine();
+			instruction = input.nextLine();
 		}
 		
-		cin.close();
+		input.close();
 	}
 
-	static boolean valid(String input) {
+	static boolean valid(String instruction) {
 		boolean valid = true;
 
 		List<String> validEntries = (List<String>) Arrays
 				.asList(new String[] { "r", "q", "1", "2", "3", "4", "5", "6" });
 
-		if (!validEntries.contains(input.toLowerCase())) {
+		if (!validEntries.contains(instruction.toLowerCase())) {
 			valid = false;
 		}
 
