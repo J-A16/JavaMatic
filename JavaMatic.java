@@ -35,7 +35,7 @@ public class JavaMatic {
 		Arrays.sort(ingredients);
 
 		drinks = new String[] { "Coffee", "Decaf Coffee", "Caffe Latte", "Caffe Americano", "Caffe Mocha",
-				"Cappucinputo" };
+				"Cappuccino" };
 
 		Arrays.sort(drinks);
 
@@ -52,7 +52,7 @@ public class JavaMatic {
 		drinkRecipes.put("Caffe Mocha", Map.ofEntries(entry("Espresso", 1), entry("Cocoa", 1), entry("Steamed Milk", 1),
 				entry("Whipped Cream", 1)));
 
-		drinkRecipes.put("Cappucinputo",
+		drinkRecipes.put("Cappuccino",
 				Map.ofEntries(entry("Espresso", 2), entry("Steamed Milk", 1), entry("Foamed Milk", 1)));
 
 		drinksStock = new boolean[drinks.length];
